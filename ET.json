@@ -1,0 +1,57 @@
+{
+
+  "Preconditions": {
+    "1": {"action": "open","value1": "Easy Ticket"},
+    "2": {"action": "type","value1": "CustomerNumber", "value2": "12345"},
+    "3": {"action": "type","value1": "AccountNumber", "value2": "12345"},
+    "4": {"action": "click","value1": "SignInButton"},
+    "5": {"action": "click","value1": "CreateIncidentButton"}
+                    },
+  "ExistanceAssertions": {
+    "1": "ToDashBoardLabel",
+    "2": "ToDashBoardButton",
+    "3": "CreateIncidentLabel",
+    "4": "YourReferenceTextBox",
+    "5": "YourReferenceHelpText",
+    "6": "CustomerNameLabel",
+    "7": "CustomerNameValue",
+    "8": "ProductNameLabel",
+    "9": "ProductNameValue",
+    "10": "LocationLabel",
+    "11": "LocationValue",
+    "12": "ContactDataTitle",
+    "13": "SalutaionDropDownList",
+    "14": "FirstNameTextBox",
+    "15": "LastNameTextBox",
+    "16": "LandLineTextBox",
+    "17": "smsRadioButton",
+    "18": "EmailRadioButton",
+    "19": "MobileTextBox",
+    "20": "EmailTextBox",
+    "21": "LanguageLabel",
+    "22": "DeutschRadioButton",
+    "23": "EnglishRadioButton",
+    "24": "ContactDataSaveAndContinueButton",
+    "25": "ProblemClassificationTitle",
+    "26": "ProblemDescriptionTitle",
+    "27":"ConfiramtionTitle"
+  },
+  "LanguageAssertions": {
+    "1": "ToDashBoardLabel",
+    "2": "CreateIncidentLabel",
+    "3": "YourReferenceHelpText",
+    "4": "CustomerNameLabel",
+    "5": "ProductNameLabel",
+    "6": "LocationLabel",
+    "7": "ContactDataTitle",
+    "8": "smsRadioButton",
+    "9": "EmailRadioButton",
+    "10": "LanguageLabel",
+    "11": "DeutschRadioButton",
+    "12": "EnglishRadioButton",
+    "13": "ContactDataSaveAndContinueButton",
+    "14": "ProblemClassificationTitle",
+    "15": "ProblemDescriptionTitle",
+    "16":"ConfiramtionTitle"
+  }
+}
