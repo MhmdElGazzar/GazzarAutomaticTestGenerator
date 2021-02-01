@@ -6,7 +6,7 @@
     "3": {"action": "type","value1": "AccountNumber", "value2": "12345"},
     "4": {"action": "click","value1": "SignInButton"},
     "5": {"action": "click","value1": "CreateIncidentButton"}
-                    },
+  },
   "ExistanceAssertions": {
     "1": "ToDashBoardLabel",
     "2": "ToDashBoardButton",

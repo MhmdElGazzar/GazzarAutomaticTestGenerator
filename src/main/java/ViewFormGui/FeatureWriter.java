@@ -16,45 +16,20 @@ public class FeatureWriter {
             System.out.println("Can't Create File");
         }
     }
-    public void addLine(String line)
-    {
+    public void addText(String text,String errorPlace) {
         try {
-            myWriter.write(line);
-            System.out.println(line+"is written");
+            myWriter.write(text);
+            System.out.println(text+"is written");
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println("An error occurred in "+errorPlace+".");
             e.printStackTrace();
         }
     }
-    public void setTags(String line)
-    {
-        try {
-            myWriter.write("@FERegression   "+line+"\n");
-            System.out.println(line+"is written");
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
+    public void setTags(String tags) {addText(tags,"Tags writing");
     }
-    public void setFeatureTitle(String featureName)
-    {
-        try {
-            myWriter.write("Feature:"+featureName+"\n");
-
-        } catch (IOException e) {
-            System.out.println("An error occurred in writing title.");
-            e.printStackTrace();
-        }
-    }
+    public void setFeatureTitle(String featureName) { addText("Feature:"+featureName+"\n","setFeatureTitle"); }
     public void setScenarioTitle(String scenarioTitle)
-    {
-        try {
-            myWriter.write("Scenario: Testing view form for "+scenarioTitle+"\n");
-        } catch (IOException e) {
-            System.out.println("An error occurred in writing scenario title.");
-            e.printStackTrace();
-        }
-    }
+    {addText("Scenario: Testing view form for "+scenarioTitle+"\n","writing scenario title"); }
 
     public void closeFile() {
       try{
@@ -72,10 +47,10 @@ public class FeatureWriter {
             step= "Given I open "+ value+" Portal\n";
             break;
             case "click":
-                step= "When I click on \""+ value+"\"\n";
+                step= "When I click on "+ value+"\n";
                 break;
             case "see":
-                step= "Then I \"should\" see \""+ value+"\"\n";
+                step= "Then I should see "+ value+"\n";
                 break;
             case "language":
                 step= "When the language is \""+ value+"\"\n";
@@ -84,27 +59,17 @@ public class FeatureWriter {
                 step= "And I am on \""+ value+"\" page\n";
                 break;
             case "text":
-                step= "Then I should see \""+ value+"\" has the translated text\n";
+                step= "Then I should see "+ value+" has the translated text\n";
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + key);
         }
-     try{
-        myWriter.write("\t"+step);
-    }
-        catch (IOException e)
-    {
-        System.out.println("Can't Write Step");
-    }
+        addText("\t"+step,"Step writing");
+
     }
     public void createSteps (String key, String value1,String value2) {
-        String step= "When I type \""+value2+"\" in \""+value1+"\" TextBox\n";
-        try {
-            myWriter.write("\t"+step);
-        }
-        catch (IOException e)
-        {
-            System.out.println("Can't Write Step");
-        }
+        String step= "When I type \""+value2+"\" in "+value1+" TextBox\n";
+        addText("\t"+step,"Step writing");
+
     }
 }

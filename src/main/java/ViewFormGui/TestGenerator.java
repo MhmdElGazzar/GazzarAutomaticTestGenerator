@@ -10,7 +10,9 @@ public class TestGenerator {
     private JSONObject preconditions;
     private JSONObject existanceAssertions;
     private JSONObject languageAssertions;
-    FeatureWriter featureWriter;
+
+
+
     public TestGenerator(String fileName) {
         pageData = JsonTestDataReader.parseJson(fileName);
         pageLocators = (JSONObject) pageData.get("Locators");
@@ -20,58 +22,37 @@ public class TestGenerator {
         languageAssertions = (JSONObject) pageData.get("LanguageAssertions");
 
     }
-    public void generateTestLayout(String featureName, String tags)
-    {
-        featureWriter=new FeatureWriter(featureName+".feature");
-        featureWriter.setTags(tags);
-        featureWriter.setFeatureTitle(featureName);
-        featureWriter.setScenarioTitle(featureName);
-    }
 
-    public void performActions() {
-
-        preconditions.keySet().forEach(keyStr ->
-        {
-            JSONObject action = (JSONObject) preconditions.get(keyStr);
-            String action_type = action.get("action").toString();
-            String action_value1 = action.get("value1").toString();
-            if (action.containsKey("value2")) {
-            String action_value2=action.get("value2").toString();
-            featureWriter.createSteps(action_type,action_value1,action_value2);
-            }
-            else
-            {
-                featureWriter.createSteps(action_type,action_value1);
-            }
-        });
+    public void generateStepDefinition(String featureTitle)
+    { StepDefGenerator stepDefGenerator= new StepDefGenerator();
+        stepDefGenerator.generateLayout(featureTitle);
+        stepDefGenerator.createExistanceStepDefinitions(existanceAssertions);
+        stepDefGenerator.createLanguageStepDef(languageAssertions);
+        stepDefGenerator.produce();
     }
-    public void performExistanceAssertions() {
+    public void generateFeatureFile(String featureTitle,String featureTags)
+    { FeatureGenerator featureGenerator= new FeatureGenerator();
+        featureGenerator.generateLayout(featureTitle,featureTags);
+        featureGenerator.performActions(preconditions);
+        featureGenerator.performExistanceAssertions(existanceAssertions);
+        featureGenerator.performLanguageAssertions(languageAssertions);
+        featureGenerator.produce();
 
-        existanceAssertions.keySet().forEach(keyStr ->
-        {
-            String attr  = existanceAssertions.get(keyStr).toString();
-                featureWriter.createSteps("see",attr);
-                  });
     }
-    public void performLanguageAssertions() {
-        featureWriter.createSteps("language","English");
-        languageAssertions.keySet().forEach(keyStr ->
-        {
-            String attr  = languageAssertions.get(keyStr).toString();
-            featureWriter.createSteps("text",attr);
-        });
-        featureWriter.createSteps("language","Deutsch");
-        languageAssertions.keySet().forEach(keyStr ->
-        {
-            String attr  = languageAssertions.get(keyStr).toString();
-            featureWriter.createSteps("text",attr);
-        });
-    }
-    public void produceFeature()
-    {
-        featureWriter.closeFile();
-        System.out.println("File closed");
-
+    public void generateCode(String pageName)
+    { CodeGenerator codeGenerator= new CodeGenerator();
+        codeGenerator.generateLayout(pageName);
+        codeGenerator.initiate("Locators");
+        codeGenerator.createLocators(pageLocators);
+        codeGenerator.initiate("TextDefinition");
+        codeGenerator.createTextArrays(pageText);
+        codeGenerator.initiate("Assertions");
+        codeGenerator.createMethod(existanceAssertions,"ExistanceAssertion");
+        codeGenerator.initiate("Text Assertions");
+        codeGenerator.createMethod(languageAssertions,"LanguageAssertion");
+        codeGenerator.initiate("Actions");
+        codeGenerator.createActions(existanceAssertions);
+        codeGenerator.produce();
     }
 
 }
